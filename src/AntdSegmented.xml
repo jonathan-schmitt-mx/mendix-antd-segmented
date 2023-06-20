@@ -26,6 +26,13 @@
                     <attributeType name="String" />
                 </attributeTypes>
             </property>
+            <property key="dsReference" type="association" selectableObjects="dsValue" required="false">
+                <caption>Datasource Reference Attribute</caption>
+                <description />
+                <associationTypes>
+                    <associationType name="Reference" />
+                </associationTypes>
+            </property>
         </propertyGroup>
     </properties>
 </widget>

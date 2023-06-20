@@ -4,7 +4,7 @@
  * @author Mendix Widgets Framework Team
  */
 import { CSSProperties } from "react";
-import { EditableValue, ListValue, ListAttributeValue } from "mendix";
+import { EditableValue, ListValue, ListAttributeValue, ReferenceValue } from "mendix";
 
 export interface AntdSegmentedContainerProps {
     name: string;
@@ -14,6 +14,7 @@ export interface AntdSegmentedContainerProps {
     enumValue?: EditableValue<string>;
     dsValue?: ListValue;
     dsAttribute?: ListAttributeValue<string>;
+    dsReference?: ReferenceValue;
 }
 
 export interface AntdSegmentedPreviewProps {
@@ -28,4 +29,5 @@ export interface AntdSegmentedPreviewProps {
     enumValue: string;
     dsValue: {} | { caption: string } | { type: string } | null;
     dsAttribute: string;
+    dsReference: string;
 }

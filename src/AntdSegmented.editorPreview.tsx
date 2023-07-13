@@ -5,5 +5,5 @@ export function preview(): ReactElement {
 }
 
 export function getPreviewCss(): string {
-    return require("./ui/AntdSegmented.css");
+    return require("./ui/AntdSegmented.scss");
 }

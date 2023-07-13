@@ -3,31 +3,29 @@
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix Widgets Framework Team
  */
-import { CSSProperties } from "react";
 import { EditableValue, ListValue, ListAttributeValue, ReferenceValue } from "mendix";
+
+export type SizeEnum = "small" | "middle" | "large";
 
 export interface AntdSegmentedContainerProps {
     name: string;
-    class: string;
-    style?: CSSProperties;
     tabIndex?: number;
+    id: string;
     enumValue?: EditableValue<string>;
     dsValue?: ListValue;
     dsAttribute?: ListAttributeValue<string>;
     dsReference?: ReferenceValue;
+    block: boolean;
+    size: SizeEnum;
 }
 
 export interface AntdSegmentedPreviewProps {
-    /**
-     * @deprecated Deprecated since version 9.18.0. Please use class property instead.
-     */
-    className: string;
-    class: string;
-    style: string;
-    styleObject?: CSSProperties;
     readOnly: boolean;
     enumValue: string;
     dsValue: {} | { caption: string } | { type: string } | null;
     dsAttribute: string;
     dsReference: string;
+    onChangeAction: {} | null;
+    block: boolean;
+    size: SizeEnum;
 }

@@ -1,3 +1,5 @@
+import { hidePropertiesIn } from "@mendix/pluggable-widgets-tools";
+// import { Properties } from './AntdSegmented.editorConfig';
 import { AntdSegmentedPreviewProps } from "../typings/AntdSegmentedProps";
 
 export type Platform = "web" | "desktop";
@@ -103,29 +105,46 @@ export function getProperties(
     _values: AntdSegmentedPreviewProps,
     defaultProperties: Properties /* , target: Platform*/
 ): Properties {
-    // Do the values manipulation here to control the visibility of properties in Studio and Studio Pro conditionally.
-    /* Example
-    if (values.myProperty === "custom") {
-        delete defaultProperties.properties.myOtherProperty;
+    if (_values.dsValue) {
+        hidePropertiesIn(defaultProperties, _values, ["enumValue"]);
+    } else if (_values.enumValue) {
+        hidePropertiesIn(defaultProperties, _values, ["dsValue"]);
+        hidePropertiesIn(defaultProperties, _values, ["dsAttribute"]);
+        hidePropertiesIn(defaultProperties, _values, ["dsReference"]);
+    } else {
+        hidePropertiesIn(defaultProperties, _values, ["dsAttribute"]);
+        hidePropertiesIn(defaultProperties, _values, ["dsReference"]);
     }
-    */
+
     return defaultProperties;
 }
 
-// export function check(_values: AntdSegmentedPreviewProps): Problem[] {
-//     const errors: Problem[] = [];
-//     // Add errors to the above array to throw errors in Studio and Studio Pro.
-//     /* Example
-//     if (values.myProperty !== "custom") {
-//         errors.push({
-//             property: `myProperty`,
-//             message: `The value of 'myProperty' is different of 'custom'.`,
-//             url: "https://github.com/myrepo/mywidget"
-//         });
-//     }
-//     */
-//     return errors;
-// }
+export function check(_values: AntdSegmentedPreviewProps): Problem[] {
+    const errors: Problem[] = [];
+    if (_values.dsValue) {
+        if (!_values.dsAttribute) {
+            errors.push({
+                property: `dsAttribute`,
+                message: `The value of 'dsAttribute' is required for a datasource type.`
+            });
+        }
+        if (!_values.dsReference) {
+            errors.push({
+                property: `dsReference`,
+                message: `The value of 'dsReference' is required for a datasource type.`
+            });
+        }
+    } else {
+        if (Boolean(_values.dsValue) == Boolean(_values.enumValue)) {
+            errors.push({
+                property: `enumValue`,
+                message: `Single type required.`
+            });
+        }
+    }
+
+    return errors;
+}
 
 // export function getPreview(values: AntdSegmentedPreviewProps, isDarkMode: boolean, version: number[]): PreviewProps {
 //     // Customize your pluggable widget appearance for Studio Pro.

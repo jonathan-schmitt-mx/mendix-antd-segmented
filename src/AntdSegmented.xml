@@ -1,38 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<widget id="mendix.antdsegmented.AntdSegmented" pluginWidget="true" needsEntityContext="true" offlineCapable="true"
-    supportedPlatform="Web"
-    xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
+<widget id="mendix.antdsegmented.AntdSegmented"
+        pluginWidget="true"
+        needsEntityContext="true"
+        offlineCapable="true"
+        supportedPlatform="Web"
+        xmlns="http://www.mendix.com/widget/1.0/"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
     <name>Antd Segmented</name>
     <description>Antd Segmented</description>
     <icon />
     <properties>
         <propertyGroup caption="General">
-            <property key="enumValue" type="attribute" required="false">
-                <caption>Enum Value</caption>
-                <description />
-                <attributeTypes>
-                    <attributeType name="Enum" />
-                </attributeTypes>
-            </property>
-            <property key="dsValue" type="datasource" isList="true" required="false">
-                <caption>Datasource Value</caption>
-                <description />
-            </property>
-            <property key="dsAttribute" type="attribute" dataSource="dsValue" required="false">
-                <caption>Datasource Display Attribute</caption>
-                <description />
-                <attributeTypes>
-                    <attributeType name="String" />
-                </attributeTypes>
-            </property>
-            <property key="dsReference" type="association" selectableObjects="dsValue" required="false">
-                <caption>Datasource Reference Attribute</caption>
-                <description />
-                <associationTypes>
-                    <associationType name="Reference" />
-                </associationTypes>
-            </property>
+            <propertyGroup caption="Data source">
+                <property key="enumValue"
+                          type="attribute"
+                          required="false"
+                          onChange="onChangeAction">
+                    <caption>Enumeration</caption>
+                    <description />
+                    <attributeTypes>
+                        <attributeType name="Enum" />
+                    </attributeTypes>
+                </property>
+                <property key="dsValue"
+                          type="datasource"
+                          isList="true"
+                          required="false">
+                    <caption>Datasource</caption>
+                    <description />
+                </property>
+                <property key="dsAttribute"
+                          type="attribute"
+                          dataSource="dsValue"
+                          required="false">
+                    <caption>Label</caption>
+                    <description />
+                    <attributeTypes>
+                        <attributeType name="String" />
+                    </attributeTypes>
+                </property>
+                <property key="dsReference"
+                          type="association"
+                          selectableObjects="dsValue"
+                          required="false"
+                          onChange="onChangeAction">
+                    <caption>Reference</caption>
+                    <description />
+                    <associationTypes>
+                        <associationType name="Reference" />
+                    </associationTypes>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Label">
+                <systemProperty key="Label" />
+            </propertyGroup>
+            <propertyGroup caption="Editability">
+                <systemProperty key="Editability" />
+            </propertyGroup>
+            <propertyGroup caption="Visibility">
+                <systemProperty key="Visibility" />
+            </propertyGroup>
+        </propertyGroup>
+        <propertyGroup caption="Events">
+            <propertyGroup caption="Events">
+                <property key="onChangeAction"
+                          type="action"
+                          required="false">
+                    <caption>On change</caption>
+                    <description />
+                </property>
+            </propertyGroup>
+        </propertyGroup>
+        <propertyGroup caption="Aesthetics">
+            <propertyGroup caption="Aesthetics">
+                <property key="block"
+                          type="boolean"
+                          defaultValue="false">
+                    <caption>Block</caption>
+                    <description>Option to fit width to its parent's width</description>
+                </property>
+                <property key="size"
+                          type="enumeration"
+                          defaultValue="middle">
+                    <caption>Size</caption>
+                    <description>The size of the Segmented component</description>
+                    <enumerationValues>
+                        <enumerationValue key="small">Small</enumerationValue>
+                        <enumerationValue key="middle">Medium</enumerationValue>
+                        <enumerationValue key="large">Large</enumerationValue>
+                    </enumerationValues>
+                </property>
+            </propertyGroup>
         </propertyGroup>
     </properties>
 </widget>

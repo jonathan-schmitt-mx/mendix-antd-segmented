@@ -3,7 +3,7 @@ import { Segmented } from "antd";
 
 import { AntdSegmentedContainerProps } from "../typings/AntdSegmentedProps";
 
-import "./ui/AntdSegmented.css";
+import "./ui/AntdSegmented.scss";
 
 export function AntdSegmented({
     dsValue,
@@ -11,7 +11,7 @@ export function AntdSegmented({
     dsReference,
     enumValue
 }: AntdSegmentedContainerProps): ReactElement {
-    const [options, setOptions] = useState<Map<string, any>>();
+    const [options, setOptions] = useState<Map<string, any>>(); // any is an ObjectItem, please find and import :)
     useEffect(() => {
         const map = new Map();
         if (dsValue?.status === "available" && dsValue.items && dsAttribute) {
@@ -20,24 +20,30 @@ export function AntdSegmented({
         }
     }, [dsValue]);
 
-    if (dsValue?.status === "available" && dsValue.items && dsReference) {
+    if (dsValue?.status === "available" && dsValue.items && dsReference && options) {
         return (
             <Segmented
-                options={
-                    dsValue.items.map(item => dsAttribute?.get(item).displayValue || "defaultValue") || [
-                        "defaultDSList"
-                    ]
-                }
+                options={Array.from(options.keys()) || ["defaultDSList"]}
+                disabled={dsReference.readOnly}
                 value={dsReference.value ? dsAttribute?.get(dsReference.value).displayValue : ""}
-                onChange={value => dsReference.setValue(options?.get(value.toString()))}
+                onChange={value => {
+                    const selectedObject = options?.get(value.toString());
+                    dsReference.setValue(selectedObject);
+                }}
             />
         );
     } else if (enumValue) {
         return (
             <Segmented
-                options={enumValue.universe || ["defaultEnumList"]}
-                value={enumValue.value}
-                onChange={value => enumValue.setValue(value.toString())}
+                options={enumValue.universe?.map(value => enumValue.formatter.format(value)) || ["defaultEnumList"]}
+                value={enumValue.displayValue || ""}
+                disabled={enumValue.readOnly}
+                onChange={value => {
+                    const selectedValue = enumValue.universe?.find(
+                        keyValue => enumValue.formatter.format(keyValue) === value
+                    );
+                    enumValue.setValue(selectedValue);
+                }}
             />
         );
     }

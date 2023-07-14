@@ -1,4 +1,4 @@
-import { hidePropertiesIn } from "@mendix/pluggable-widgets-tools";
+// import { hidePropertiesIn, hideNestedPropertiesIn } from "@mendix/pluggable-widgets-tools";
 // import { Properties } from './AntdSegmented.editorConfig';
 import { AntdSegmentedPreviewProps } from "../typings/AntdSegmentedProps";
 
@@ -105,15 +105,19 @@ export function getProperties(
     _values: AntdSegmentedPreviewProps,
     defaultProperties: Properties /* , target: Platform*/
 ): Properties {
-    if (_values.dsValue) {
-        hidePropertiesIn(defaultProperties, _values, ["enumValue"]);
-    } else if (_values.enumValue) {
-        hidePropertiesIn(defaultProperties, _values, ["dsValue"]);
-        hidePropertiesIn(defaultProperties, _values, ["dsAttribute"]);
-        hidePropertiesIn(defaultProperties, _values, ["dsReference"]);
-    } else {
-        hidePropertiesIn(defaultProperties, _values, ["dsAttribute"]);
-        hidePropertiesIn(defaultProperties, _values, ["dsReference"]);
+    const datasourceGroup = defaultProperties
+        .find(group => group.caption === "General")
+        ?.propertyGroups?.find(group => group.caption === "Data source");
+    if (datasourceGroup) {
+        if (_values.dsType === "ds") {
+            datasourceGroup.properties = datasourceGroup?.properties?.filter(property => property.key !== "enumValue");
+        }
+        if (_values.dsType === "enum") {
+            datasourceGroup.properties = datasourceGroup?.properties?.filter(
+                property =>
+                    property.key !== "dsValue" && property.key !== "dsAttribute" && property.key !== "dsReference"
+            );
+        }
     }
 
     return defaultProperties;
@@ -134,13 +138,18 @@ export function check(_values: AntdSegmentedPreviewProps): Problem[] {
                 message: `The value of 'dsReference' is required for a datasource type.`
             });
         }
-    } else {
-        if (Boolean(_values.dsValue) == Boolean(_values.enumValue)) {
-            errors.push({
-                property: `enumValue`,
-                message: `Single type required.`
-            });
-        }
+    }
+    if (_values.dsType === "ds" && !_values.dsValue) {
+        errors.push({
+            property: `dsValue`,
+            message: `Data source is required.`
+        });
+    }
+    if (_values.dsType === "enum" && !_values.enumValue) {
+        errors.push({
+            property: `enumValue`,
+            message: `Data source is required.`
+        });
     }
 
     return errors;

@@ -5,12 +5,15 @@
  */
 import { EditableValue, ListValue, ListAttributeValue, ReferenceValue } from "mendix";
 
+export type DsTypeEnum = "enum" | "ds";
+
 export type SizeEnum = "small" | "middle" | "large";
 
 export interface AntdSegmentedContainerProps {
     name: string;
     tabIndex?: number;
     id: string;
+    dsType: DsTypeEnum;
     enumValue?: EditableValue<string>;
     dsValue?: ListValue;
     dsAttribute?: ListAttributeValue<string>;
@@ -21,6 +24,7 @@ export interface AntdSegmentedContainerProps {
 
 export interface AntdSegmentedPreviewProps {
     readOnly: boolean;
+    dsType: DsTypeEnum;
     enumValue: string;
     dsValue: {} | { caption: string } | { type: string } | null;
     dsAttribute: string;

@@ -13,6 +13,16 @@
     <properties>
         <propertyGroup caption="General">
             <propertyGroup caption="Data source">
+                <property key="dsType"
+                          type="enumeration"
+                          defaultValue="enum">
+                    <caption>Type</caption>
+                    <description/>
+                    <enumerationValues>
+                        <enumerationValue key="enum">Enumeration</enumerationValue>
+                        <enumerationValue key="ds">List</enumerationValue>
+                    </enumerationValues>
+                </property>
                 <property key="enumValue"
                           type="attribute"
                           required="false"
@@ -72,8 +82,8 @@
                 </property>
             </propertyGroup>
         </propertyGroup>
-        <propertyGroup caption="Aesthetics">
-            <propertyGroup caption="Aesthetics">
+        <propertyGroup caption="Options">
+            <propertyGroup caption="Ant Design Options">
                 <property key="block"
                           type="boolean"
                           defaultValue="false">

@@ -11,14 +11,14 @@ export function AntdSegmented({
     dsReference,
     enumValue
 }: AntdSegmentedContainerProps): ReactElement {
-    const [options, setOptions] = useState<Map<string, any>>(); // any is an ObjectItem, please find and import :)
+    const [options, setOptions] = useState<Map<string, any>>(); // any is an ObjectItem, please find and import
     useEffect(() => {
         const map = new Map();
         if (dsValue?.status === "available" && dsValue.items && dsAttribute) {
             dsValue.items.forEach(item => map.set(dsAttribute.get(item).displayValue, item));
             setOptions(map);
         }
-    }, [dsValue]);
+    }, [dsValue, dsAttribute]);
 
     if (dsValue?.status === "available" && dsValue.items && dsReference && options) {
         return (

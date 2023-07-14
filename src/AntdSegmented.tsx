@@ -23,7 +23,7 @@ export function AntdSegmented({
     if (dsValue?.status === "available" && dsValue.items && dsReference && options) {
         return (
             <Segmented
-                options={Array.from(options.keys()) || ["defaultDSList"]}
+                options={Array.from(options.keys()) || []}
                 disabled={dsReference.readOnly}
                 value={dsReference.value ? dsAttribute?.get(dsReference.value).displayValue : ""}
                 onChange={value => {
@@ -35,7 +35,7 @@ export function AntdSegmented({
     } else if (enumValue) {
         return (
             <Segmented
-                options={enumValue.universe?.map(value => enumValue.formatter.format(value)) || ["defaultEnumList"]}
+                options={enumValue.universe?.map(value => enumValue.formatter.format(value)) || []}
                 value={enumValue.displayValue || ""}
                 disabled={enumValue.readOnly}
                 onChange={value => {

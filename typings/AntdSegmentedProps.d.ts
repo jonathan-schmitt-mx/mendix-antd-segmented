@@ -3,7 +3,7 @@
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix Widgets Framework Team
  */
-import { EditableValue, ListValue, ListAttributeValue, ReferenceValue } from "mendix";
+import { EditableValue, ListValue, ListAttributeValue, ListExpressionValue, ReferenceValue } from "mendix";
 
 export type DsTypeEnum = "enum" | "ds";
 
@@ -18,6 +18,7 @@ export interface AntdSegmentedContainerProps {
     dsValue?: ListValue;
     dsAttribute?: ListAttributeValue<string>;
     dsReference?: ReferenceValue;
+    dsDisabled?: ListExpressionValue<boolean>;
     block: boolean;
     size: SizeEnum;
 }
@@ -29,6 +30,7 @@ export interface AntdSegmentedPreviewProps {
     dsValue: {} | { caption: string } | { type: string } | null;
     dsAttribute: string;
     dsReference: string;
+    dsDisabled: string;
     onChangeAction: {} | null;
     block: boolean;
     size: SizeEnum;

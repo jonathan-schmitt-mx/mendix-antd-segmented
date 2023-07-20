@@ -4,31 +4,44 @@ import { Segmented } from "antd";
 import { AntdSegmentedContainerProps } from "../typings/AntdSegmentedProps";
 
 import "./ui/AntdSegmented.scss";
+import { SegmentedLabeledOption } from "antd/es/segmented";
 
 export function AntdSegmented({
     dsValue,
     dsAttribute,
     dsReference,
+    dsDisabled,
     enumValue
 }: AntdSegmentedContainerProps): ReactElement {
-    const [options, setOptions] = useState<Map<string, any>>(); // any is an ObjectItem, please find and import
+    const [options, setOptions] = useState<SegmentedLabeledOption[]>([]);
+
     useEffect(() => {
-        const map = new Map();
-        if (dsValue?.status === "available" && dsValue.items && dsAttribute) {
-            dsValue.items.forEach(item => map.set(dsAttribute.get(item).displayValue, item));
-            setOptions(map);
+        if (dsValue?.items && dsAttribute) {
+            setOptions(
+                dsValue.items.map((item, index) => ({
+                    label: dsAttribute.get(item).displayValue,
+                    value: index,
+                    disabled: dsDisabled && dsDisabled.get(item).value
+                }))
+            );
         }
     }, [dsValue, dsAttribute]);
 
-    if (dsValue?.status === "available" && dsValue.items && dsReference && options) {
+    if (dsValue?.status === "available" && dsValue.items && dsReference && dsAttribute) {
         return (
             <Segmented
-                options={Array.from(options.keys()) || []}
+                options={options}
                 disabled={dsReference.readOnly}
-                value={dsReference.value ? dsAttribute?.get(dsReference.value).displayValue : ""}
+                value={
+                    dsReference.value
+                        ? options.findIndex(item => (item.label === dsAttribute?.get(dsReference.value!).displayValue))
+                        : ""
+                }
                 onChange={value => {
-                    const selectedObject = options?.get(value.toString());
-                    dsReference.setValue(selectedObject);
+                    if (dsValue.items) {
+                        const selectedObject = dsValue.items[Number(value.valueOf())];
+                        dsReference.setValue(selectedObject);
+                    }
                 }}
             />
         );

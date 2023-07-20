@@ -61,6 +61,11 @@
                         <associationType name="Reference" />
                     </associationTypes>
                 </property>
+                <property key="dsDisabled" type="expression" dataSource="dsValue" required="false">
+                    <caption>Disabled</caption>
+                    <description>Disabled if True</description>
+                    <returnType type="Boolean" />
+                </property>
             </propertyGroup>
             <propertyGroup caption="Label">
                 <systemProperty key="Label" />

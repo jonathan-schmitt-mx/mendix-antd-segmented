@@ -11,16 +11,18 @@ export function AntdSegmented({
     dsAttribute,
     dsReference,
     dsDisabled,
-    enumValue
+    enumValue,
+    optionType,
+    content
 }: AntdSegmentedContainerProps): ReactElement {
     const [options, setOptions] = useState<SegmentedLabeledOption[]>([]);
 
     useEffect(() => {
         if (dsValue?.items && dsAttribute) {
             setOptions(
-                dsValue.items.map((item, index) => ({
-                    label: dsAttribute.get(item).displayValue,
-                    value: index,
+                dsValue.items.map((item) => ({
+                    label: optionType === "custom" ? content?.get(item) : dsAttribute.get(item).displayValue,
+                    value: item.id,
                     disabled: dsDisabled && dsDisabled.get(item).value
                 }))
             );
@@ -34,12 +36,13 @@ export function AntdSegmented({
                 disabled={dsReference.readOnly}
                 value={
                     dsReference.value
-                        ? options.findIndex(item => (item.label === dsAttribute?.get(dsReference.value!).displayValue))
+                        // find another options to dereference other than label
+                        ? options.find(item => (item.value === dsReference.value!.id))?.value
                         : ""
                 }
                 onChange={value => {
                     if (dsValue.items) {
-                        const selectedObject = dsValue.items[Number(value.valueOf())];
+                        const selectedObject = dsValue.items.find(item => item.id === value);
                         dsReference.setValue(selectedObject);
                     }
                 }}

@@ -148,7 +148,7 @@ export function check(_values: AntdSegmentedPreviewProps): Problem[] {
     if (_values.dsType === "enum" && !_values.enumValue) {
         errors.push({
             property: `enumValue`,
-            message: `Data source is required.`
+            message: `Enum is required.`
         });
     }
 
@@ -156,10 +156,39 @@ export function check(_values: AntdSegmentedPreviewProps): Problem[] {
 }
 
 // export function getPreview(values: AntdSegmentedPreviewProps, isDarkMode: boolean, version: number[]): PreviewProps {
-//     // Customize your pluggable widget appearance for Studio Pro.
+    
 //     return {
 //         type: "Container",
-//         children: []
+//         children: [
+//             {
+//                 type: "RowLayout",
+//                 columnSize: "grow",
+//                 padding: 5,
+//                 borders: true,
+//                 borderWidth: 1,
+//                 borderRadius: 5,
+//                 children: [
+//                     {
+//                         type: "Container",
+//                         grow: 1,
+//                         children: [
+//                             {
+//                                 type: "Text",
+//                                 fontSize: 10,
+//                                 content: "Datetime Value"
+//                             }
+//                         ]
+//                     },
+                    
+//                         {
+//                             type: "DropZone",
+//                             property: values.content,
+//                             placeholder: "Drop your custom date render content here"
+//                         }
+                    
+//                 ]
+//             }
+//         ]
 //     }
 // }
 

@@ -1,7 +1,7 @@
 import { ReactElement, createElement } from "react";
 
 export function preview(): ReactElement {
-    return <div>Antd Segmented</div>;
+    return <div>AntdSegmentedPreviewProps</div>;
 }
 
 export function getPreviewCss(): string {

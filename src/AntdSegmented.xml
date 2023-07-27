@@ -40,11 +40,21 @@
                     <caption>Datasource</caption>
                     <description />
                 </property>
+                <property key="optionType"
+                          type="enumeration"
+                          defaultValue="attribute">
+                    <caption>Option Type</caption>
+                    <description/>
+                    <enumerationValues>
+                        <enumerationValue key="attribute">Attribute</enumerationValue>
+                        <enumerationValue key="custom">Custom</enumerationValue>
+                    </enumerationValues>
+                </property>
                 <property key="dsAttribute"
                           type="attribute"
                           dataSource="dsValue"
                           required="false">
-                    <caption>Label</caption>
+                    <caption>Attribute</caption>
                     <description />
                     <attributeTypes>
                         <attributeType name="String" />
@@ -62,9 +72,13 @@
                     </associationTypes>
                 </property>
                 <property key="dsDisabled" type="expression" dataSource="dsValue" required="false">
-                    <caption>Disabled</caption>
-                    <description>Disabled if True</description>
+                    <caption>Disabled?</caption>
+                    <description/>
                     <returnType type="Boolean" />
+                </property>
+                <property key="content" type="widgets" dataSource="dsValue" required="false">
+                    <caption>Content</caption>
+                    <description/>
                 </property>
             </propertyGroup>
             <propertyGroup caption="Label">

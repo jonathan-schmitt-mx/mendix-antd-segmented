@@ -72,7 +72,7 @@
                     </associationTypes>
                 </property>
                 <property key="dsDisabled" type="expression" dataSource="dsValue" required="false">
-                    <caption>Disabled?</caption>
+                    <caption>Disabled</caption>
                     <description/>
                     <returnType type="Boolean" />
                 </property>

@@ -1,8 +1,6 @@
 import { ReactElement, createElement, Fragment, useState, useEffect } from "react";
-import { Segmented } from "antd";
-
+import { Segmented, Skeleton } from "antd";
 import { AntdSegmentedContainerProps } from "../typings/AntdSegmentedProps";
-
 import "./ui/AntdSegmented.scss";
 import { SegmentedLabeledOption } from "antd/es/segmented";
 
@@ -13,15 +11,17 @@ export function AntdSegmented({
     dsDisabled,
     enumValue,
     optionType,
-    content
+    content,
+    size,
+    block
 }: AntdSegmentedContainerProps): ReactElement {
     const [options, setOptions] = useState<SegmentedLabeledOption[]>([]);
 
     useEffect(() => {
-        if (dsValue?.items && dsAttribute) {
+        if (dsValue?.status === "available" && dsValue.items) {
             setOptions(
-                dsValue.items.map((item) => ({
-                    label: optionType === "custom" ? content?.get(item) : dsAttribute.get(item).displayValue,
+                dsValue.items.map(item => ({
+                    label: optionType === "custom" ? content?.get(item) : dsAttribute?.get(item).displayValue,
                     value: item.id,
                     disabled: dsDisabled && dsDisabled.get(item).value
                 }))
@@ -29,25 +29,34 @@ export function AntdSegmented({
         }
     }, [dsValue, dsAttribute]);
 
-    if (dsValue?.status === "available" && dsValue.items && dsReference && dsAttribute) {
-        return (
-            <Segmented
-                options={options}
-                disabled={dsReference.readOnly}
-                value={
-                    dsReference.value
-                        // find another options to dereference other than label
-                        ? options.find(item => (item.value === dsReference.value!.id))?.value
-                        : ""
-                }
-                onChange={value => {
-                    if (dsValue.items) {
-                        const selectedObject = dsValue.items.find(item => item.id === value);
-                        dsReference.setValue(selectedObject);
-                    }
-                }}
-            />
-        );
+    if (dsValue) {
+        if (dsValue.status === "available" && dsReference) {
+            if (options) {
+                return (
+                    <Segmented
+                        options={options}
+                        disabled={dsReference.readOnly}
+                        value={
+                            dsReference.value ? options.find(item => item.value === dsReference.value!.id)?.value : ""
+                        }
+                        onChange={value => {
+                            if (dsValue.items) {
+                                const selectedObject = dsValue.items.find(item => item.id === value);
+                                dsReference.setValue(selectedObject);
+                            }
+                        }}
+                        size={size}
+                        block={block}
+                    />
+                );
+            } else {
+                return <div>No Items Found</div>;
+            }
+        } else {
+            return (
+                <Skeleton.Input active size={size === "large" || size === "small" ? size : "default"} block={block} />
+            );
+        }
     } else if (enumValue) {
         return (
             <Segmented
@@ -60,6 +69,8 @@ export function AntdSegmented({
                     );
                     enumValue.setValue(selectedValue);
                 }}
+                size={size}
+                block={block}
             />
         );
     }

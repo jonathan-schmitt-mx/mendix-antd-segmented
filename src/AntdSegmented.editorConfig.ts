@@ -111,11 +111,19 @@ export function getProperties(
     if (datasourceGroup) {
         if (_values.dsType === "ds") {
             datasourceGroup.properties = datasourceGroup?.properties?.filter(property => property.key !== "enumValue");
+            if (_values.optionType === "custom") {
+                datasourceGroup.properties = datasourceGroup?.properties?.filter(
+                    property => property.key !== "dsAttribute"
+                );
+            }
         }
         if (_values.dsType === "enum") {
             datasourceGroup.properties = datasourceGroup?.properties?.filter(
                 property =>
-                    property.key !== "dsValue" && property.key !== "dsAttribute" && property.key !== "dsReference"
+                    property.key !== "dsValue" &&
+                    property.key !== "dsAttribute" &&
+                    property.key !== "dsReference" &&
+                    property.key !== "optionType"
             );
         }
     }
@@ -126,16 +134,23 @@ export function getProperties(
 export function check(_values: AntdSegmentedPreviewProps): Problem[] {
     const errors: Problem[] = [];
     if (_values.dsValue) {
-        if (!_values.dsAttribute) {
+        if (_values.optionType === "attribute" && !_values.dsAttribute) {
             errors.push({
                 property: `dsAttribute`,
-                message: `The value of 'dsAttribute' is required for a datasource type.`
+                message: `Attribute is required.`
             });
         }
         if (!_values.dsReference) {
             errors.push({
                 property: `dsReference`,
-                message: `The value of 'dsReference' is required for a datasource type.`
+                message: `Reference is required.`
+            });
+        }
+        if (_values.optionType === "custom" && !_values.content) {
+            errors.push({
+                severity: "warning",
+                property: `custom`,
+                message: `Option content is recommended.`
             });
         }
     }
@@ -155,42 +170,40 @@ export function check(_values: AntdSegmentedPreviewProps): Problem[] {
     return errors;
 }
 
-// export function getPreview(values: AntdSegmentedPreviewProps, isDarkMode: boolean, version: number[]): PreviewProps {
-    
-//     return {
-//         type: "Container",
-//         children: [
-//             {
-//                 type: "RowLayout",
-//                 columnSize: "grow",
-//                 padding: 5,
-//                 borders: true,
-//                 borderWidth: 1,
-//                 borderRadius: 5,
-//                 children: [
-//                     {
-//                         type: "Container",
-//                         grow: 1,
-//                         children: [
-//                             {
-//                                 type: "Text",
-//                                 fontSize: 10,
-//                                 content: "Datetime Value"
-//                             }
-//                         ]
-//                     },
-                    
-//                         {
-//                             type: "DropZone",
-//                             property: values.content,
-//                             placeholder: "Drop your custom date render content here"
-//                         }
-                    
-//                 ]
-//             }
-//         ]
-//     }
-// }
+export function getPreview(values: AntdSegmentedPreviewProps): PreviewProps {
+    const customContent: DropZoneProps = {
+        type: "DropZone",
+        property: values.content,
+        placeholder: "placeholder",
+    }
+    return {
+        type: "Container",
+        children: [
+            {
+                type: "RowLayout",
+                columnSize: "fixed",
+                borders: false,
+                children: [1, 2, 3].map(item => ({
+                    type: "Container",
+                    grow: 1,
+                    borders: true,
+                    padding: 5,
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    children: [
+                        values.optionType === "attribute"
+                            ? {
+                                  type: "Text",
+                                  fontSize: 10,
+                                  content: values.enumValue || values.dsAttribute + " " + item
+                              }
+                            : customContent
+                    ]
+                }))
+            }
+        ]
+    };
+}
 
 // export function getCustomCaption(values: AntdSegmentedPreviewProps, platform: Platform): string {
 //     return "AntdSegmented";

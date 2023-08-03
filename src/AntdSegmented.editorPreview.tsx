@@ -1,9 +1,9 @@
-import { ReactElement, createElement } from "react";
+// import { ReactElement, createElement } from "react";
 
-export function preview(): ReactElement {
-    return <div>AntdSegmentedPreviewProps</div>;
-}
+// export function preview(): ReactElement {
+//     return <AntdSegmentedPreview/>;
+// }
 
-export function getPreviewCss(): string {
-    return require("./ui/AntdSegmented.scss");
-}
+// export function getPreviewCss(): string {
+//     return require("./ui/AntdSegmented.scss");
+// }

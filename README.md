@@ -25,6 +25,7 @@ AntdSegmented is an input that allows for selection of one value from a list of 
 #### Enumeration
 * Select Type "Enumeration".
 * Select Enumeration attribute.
+
 ![image](https://github.com/jonathan-schmitt-mx/mendix-antd-segmented/assets/98909328/2f71377c-a47d-4508-9b8e-327501916be9)
 
 #### Association

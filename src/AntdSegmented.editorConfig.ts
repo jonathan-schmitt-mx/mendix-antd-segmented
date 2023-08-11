@@ -123,7 +123,8 @@ export function getProperties(
                     property.key !== "dsValue" &&
                     property.key !== "dsAttribute" &&
                     property.key !== "dsReference" &&
-                    property.key !== "optionType"
+                    property.key !== "optionType" &&
+                    property.key !== "dsDisabled"
             );
         }
     }
@@ -174,8 +175,8 @@ export function getPreview(values: AntdSegmentedPreviewProps): PreviewProps {
     const customContent: DropZoneProps = {
         type: "DropZone",
         property: values.content,
-        placeholder: "placeholder",
-    }
+        placeholder: "placeholder"
+    };
     return {
         type: "Container",
         children: [

@@ -8,7 +8,8 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
     <name>Antd Segmented</name>
-    <description>Antd Segmented</description>
+    <description>A segmented component to select a value from a list of options.</description>
+    <studioProCategory>Ant Design Widgets</studioProCategory>
     <icon />
     <properties>
         <propertyGroup caption="General">

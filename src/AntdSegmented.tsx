@@ -27,7 +27,7 @@ export function AntdSegmented({
                 }))
             );
         }
-    }, [dsValue, dsAttribute]);
+    }, [dsValue, dsAttribute, content, dsDisabled, optionType]);
 
     if (dsValue) {
         if (dsValue.status === "available" && dsReference) {

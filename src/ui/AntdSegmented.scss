@@ -6,5 +6,8 @@
     .ant-segmented-item {
         margin-bottom: 0;
     }
-}
 
+    &:not(.ant-segmented-block) {
+        width: fit-content;
+    }
+}

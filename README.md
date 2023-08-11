@@ -1,5 +1,6 @@
 ## AntdSegmented
 AntdSegmented is an input that allows for selection of one value from a list of possible enum, or association values with highlighting and animations.
+
 ![image](https://github.com/jonathan-schmitt-mx/mendix-antd-segmented/assets/98909328/9ac27eac-cd4e-48b3-9e73-72ea1bd6f6ec)
 
 ## Features
